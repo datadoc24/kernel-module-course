@@ -111,7 +111,15 @@ static struct netlink_kernel_cfg cfg = {
     /* There are other parameters of this structure, for now let us
      * not use them as we are just kid !!*/
 };                   
-                     
+
+
+static void nlmsg_dump(struct nlmsghdr *nlh) {
+
+    printk(KERN_INFO "%s(%d) : Netlink Header dump of US msg recvd: type = %d, flags= %d, seq = %d, port = %d, len = %d\n",
+            __FUNCTION__, __LINE__, nlh->nlmsg_type, nlh->nlmsg_flags, nlh->nlmsg_seq, nlh->nlmsg_pid, nlh->nlmsg_len);
+
+}
+
 /*Init function of this kernel Module*/
 static int __init NetlinkGreetings_init(void) {
     
