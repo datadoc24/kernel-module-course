@@ -56,7 +56,9 @@ greet_kernel(int sock_fd, char *msg, uint32_t msg_len){
 
 static void
 exit_userspace(int sock_fd){
+    printf("Closing fd\n");	
     close(sock_fd);
+    printf("Closed fd\n");	
 }
 
 uint32_t new_seq_no(){
@@ -264,6 +266,8 @@ main(int argc, char **argv){
      * to a process, good pratice to use process-id*/
     src_addr.nl_pid = getpid(); 
     
+    printf("Identified my source address as %d\n",src_addr.nl_pid);
+
     /* Binding means: here, appln is telling the OS/Kernel that 
      * this application (identified using port-id by OS) is interested 
      * in receiving the msgs for Netlink protocol# NETLINK_TEST_PROTOCOL.
@@ -283,9 +287,10 @@ main(int argc, char **argv){
 
     start_kernel_data_receiver_thread(&thread_arg);
 
-    while(1){
+    do {
         /*Main - Menu*/
-        printf("Main-Menu\n");
+        printf("Current socket fd is %d\n", sock_fd);
+	printf("Main-Menu\n");
         printf("\t1. Greet Kernel\n");
         printf("\t2. Exit\n");
         printf("choice ? ");
@@ -310,6 +315,6 @@ main(int argc, char **argv){
             default:
                 ;
         }
-    }
+    } while (choice != 2);
     return 0;
 }

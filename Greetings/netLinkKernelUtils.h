@@ -50,7 +50,7 @@
  * us just pick the unused one - 31 below */
 
 #define NETLINK_TEST_PROTOCOL   31
-
+static void nlmsg_dump(struct nlmsghdr *nlh);
 static inline char *
 netlink_get_msg_type(__u16 nlmsg_type){
 
@@ -71,7 +71,7 @@ netlink_get_msg_type(__u16 nlmsg_type){
 }
 
 static inline void
-nlmsg_dump(struct nlmsghdr *nlh){
+nlmsg_olddump(struct nlmsghdr *nlh){
 #ifdef __KERNEL__
     printk(KERN_INFO "Dumping Netlink Msgs Hdr");
 #else
